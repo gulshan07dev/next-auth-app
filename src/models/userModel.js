@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
-        require: [true, "Please provide a username"],
-        unique: true
+        require: [true, "Please provide a username"], 
     },
     email: {
         type: String,
@@ -13,7 +12,16 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        require: [true, "Please provide a password"], 
+        required: [true, 'Password is required'],
+        minLength: [4, 'Password must be at least 4 character']
+    },
+    avatar: {
+        public_id: {
+            type: String
+        },
+        secure_url: {
+            type: String
+        }
     },
     isVerified: {
         type: Boolean,
@@ -28,8 +36,8 @@ const userSchema = new mongoose.Schema({
     forgotPasswordExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date
-})
+}, { timestamps: true })
 
-const User = mongoose.model.users || mongoose.model("users", userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;

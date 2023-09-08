@@ -1,18 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-// import {axios} from 'axios';
+import axios from 'axios';
+import { useRouter } from "next/navigation";
+import {toast} from 'react-hot-toast'
 
 export default function LoginPage() {
-  const [user, setUser] = React.useState({
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState({
     email: "",
-    password: "",
-
-    // const onLogin = async () => {
-    //     axios.post()
-    // }
+    password: ""
   });
+
+  const onLogin = async (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Display a loading toast while the request is being processed 
+    const loadingToastId = toast.loading("Logging...");
+
+    try {
+      const response = await axios.post("/api/users/login", user);
+
+      // update the loading toast to a success toast
+      toast.success("Login successful!", { id: loadingToastId });
+
+      // route to profile
+      router.push("/profile");
+    } catch (error: any) {
+      // update the loading toast to an error toast
+      toast.error(error?.response?.data?.error, {
+        id: loadingToastId,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section className="flex flex-col pt-12 min-h-screen w-screen bg-gray-950 overflow-x-hidden  items-center">
       {/* header */}
@@ -29,6 +55,7 @@ export default function LoginPage() {
       {/* main input form */}
       <form
         autoComplete="off"
+        onSubmit={onLogin}
         className="py-14 px-5 flex flex-col gap-6 bg-[#00000018] backdrop-blur-sm  border-purple-700 rounded-lg max-w-[500px]  w-[97%]"
       >
         {/* email */}
@@ -66,8 +93,11 @@ export default function LoginPage() {
         </div>
 
         {/* submit btn */}
-        <button className="bg-blue-600 text-base font-semibold my-3 hover:opacity-75 text-white p-3 rounded-xl w-[100%]">
-          Login
+        <button
+          className="bg-blue-600 text-base disabled:opacity-75 font-semibold my-3 hover:opacity-75 text-white p-3 rounded-xl w-[100%]"
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging..." : "Login"}
         </button>
 
         <div>
