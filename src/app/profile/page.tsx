@@ -4,6 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 
 export default function Page() {
   // Correct the function name to start with a capital letter
@@ -78,10 +79,16 @@ export default function Page() {
       </header>
 
       {/* main input form */}
-      <div className="py-10 px-7 flex flex-col gap-6 md:justify-between justify-center bg-[#00000018] backdrop-blur-sm border-purple-700 rounded-lg md:w-[80%] w-[90%]">
+      <div className="py-8 px-7 flex flex-col gap-4 md:justify-between justify-center bg-[#00000018] backdrop-blur-sm border-purple-700 rounded-lg md:w-[80%] w-[90%]">
         {/* avatar */}
-        <div>
-          <img src="" alt="" />
+        <div className="w-[70px] h-[70px] m-auto rounded-full overflow-hidden">
+          <Image
+            className="rounded-full"
+            src={`https://images.pexels.com/users/avatars/97941/hitesh-choudhary-291.jpeg?auto=compress&fit=crop&h=130&w=130&dpr=1`}
+            width={70}
+            height={70}
+            alt="avatar"
+          />
         </div>
 
         <div className=" flex w-[100%] md:justify-between justify-center flex-wrap gap-5">
@@ -152,7 +159,7 @@ export default function Page() {
               disabled={true}
               type="text"
               value={`${userData?.isVerified?.toString() || ""} ${
-                userData?.isVerified  ? "✅" : "❌"
+                userData?.isVerified ? "✅" : "❌"
               }`}
               readOnly
               id="isVerified"
