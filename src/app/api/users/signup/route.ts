@@ -1,8 +1,8 @@
-import { connect } from "@/dbConfig/dbConfig"; 
+import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-import { sendEmail } from "@/helpers/mailer";
+import { sendEmail } from "@/helper/mailer";
 
 // init db
 connect();
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     // save user in dbConfig
     const savedUser = await userInfo.save();
 
-    //send verification email 
+    //send verification email
     await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
 
     return NextResponse.json({
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       success: true,
       userInfo,
     });
-  } catch (error: any) { 
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,20 +1,23 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
+import { sendEmail } from "@/helper/mailer";
 
 export default function Page() {
   // Correct the function name to start with a capital letter
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isVerifyLoading, setIsVerifyLoading] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     role: "",
     isVerified: "",
+    id: "",
   });
 
   const onLogout = async () => {
@@ -49,7 +52,6 @@ export default function Page() {
     const loadingToastId = toast.loading("Fetching user...");
     try {
       const response = await axios.get("/api/users/me");
-      console.log(response);
 
       setUserData((prev) => ({
         ...prev,
@@ -57,11 +59,33 @@ export default function Page() {
         email: response?.data?.data?.email,
         role: response?.data?.data?.role,
         isVerified: response?.data?.data?.isVerified,
+        id: response?.data?.data?._id,
       }));
 
       toast.dismiss(loadingToastId);
     } catch (error: any) {
       toast.error(error?.response?.data?.error, { id: loadingToastId });
+    }
+  };
+
+  //send verification email
+  const sendVerificationEmail = async () => {
+    // Display a loading toast while the request is being processed
+    const loadingToastId = toast.loading("Sending Verification email...");
+    setIsVerifyLoading(true);
+    try {
+      const response = await axios.post("/api/users/mail", {
+        email: userData?.email,
+        emailType: "VERIFY",
+      });
+
+      toast.success("Verification mail send successful", {
+        id: loadingToastId,
+      });
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message, { id: loadingToastId });
+    } finally {
+      setIsVerifyLoading(false);
     }
   };
 
@@ -165,8 +189,14 @@ export default function Page() {
               id="isVerified"
             />
             {!userData?.isVerified && (
-              <button className="absolute hover:opacity-75 right-2.5 top-[50%] bg-[#1cdf26] text-base text-white font-[500] rounded-md px-4 py-2">
-                verify
+              <button
+                className="absolute hover:opacity-75 disabled:opacity-75 right-2.5 top-[50%]
+                bg-[#1cdf26] text-base text-white font-[500] rounded-md
+                 px-4 py-2"
+                 disabled={isVerifyLoading}
+                onClick={sendVerificationEmail}
+              >
+                {isVerifyLoading ? "sending mail..." : "send verification mail"}
               </button>
             )}
           </div>

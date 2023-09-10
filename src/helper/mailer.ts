@@ -6,6 +6,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
   try {
     // create a hased token
     const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+    const encodedToken = encodeURIComponent(hashedToken);
 
     if (emailType === "VERIFY") {
       await User.findByIdAndUpdate(userId, {
@@ -19,15 +20,15 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       });
     }
 
-    var transport = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      service: "google",
-      port: process.env.SMTP_PORT,
-      auth: {
-        user: process.env.SMTP_USERNAME,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
+     var transport = nodemailer.createTransport({
+       host: "sandbox.smtp.mailtrap.io",
+       port: 2525, 
+       auth: {
+         user: process.env.SMTP_USERNAME,
+         pass: process.env.SMTP_PASSWORD,
+       },
+     });
+
 
     const mailOptions = {
       from: "gulshan@gmail.com",
@@ -36,12 +37,12 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
       html: `<p>Click <a href="${
         process.env.DOMAIN
-      }/verifyemail?token=${hashedToken}">here</a> to ${
+      }/auth/verifyemail/${encodedToken}">here</a> to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
       }
             or copy and paste the link below in your browser. <br> ${
               process.env.DOMAIN
-            }/verifyemail?token=${hashedToken}
+            }/auth/verifyemail/${encodedToken}
             </p>`,
     };
 
