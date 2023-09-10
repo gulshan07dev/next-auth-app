@@ -119,7 +119,7 @@ export default function SignupPage(): React.JSX.Element {
           <span className="text-gray-600 text-sm font-medium">
             if you have already account?{" "}
           </span>
-          <Link href={"/login"} className="text-blue-600 font-[500]">
+          <Link href={"/auth/login"} className="text-blue-600 font-[500]">
             Login
           </Link>
         </div>

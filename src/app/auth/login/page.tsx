@@ -104,7 +104,7 @@ export default function LoginPage() {
           <span className="text-gray-600 text-sm font-medium">
             if you do not have a account?{" "}
           </span>
-          <Link href={"/signup"} className="text-blue-600 font-[500]">Signup</Link>
+          <Link href={"/auth/signup"} className="text-blue-600 font-[500]">Signup</Link>
         </div>
       </form>
     </section>
