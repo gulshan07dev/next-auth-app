@@ -31,8 +31,8 @@ export default function VerifyEmailPage({params}: any) {
       </h1>
 
       {verified && (
-        <div>
-          <h2 className="text-2xl mt-7 text-orange-500 font-sans">Email Verified</h2>
+        <div className="flex flex-col gap-7">
+          <h2 className="text-2xl mt-7 text-orange-600 font-sans font-semibold">Email Verified</h2>
           <Link
             href="/auth/login"
             className="px-8 py-2.5 rounded-md text-base text-white bg-blue-500"
