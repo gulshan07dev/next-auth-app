@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import axiosInstance from "@/helper/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
@@ -10,8 +11,9 @@ import { sendEmail } from "@/helper/mailer";
 export default function Page() {
   // Correct the function name to start with a capital letter
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+  const [isUpdatingLoading, setIsUpdatingLoading] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -21,7 +23,7 @@ export default function Page() {
   });
 
   const onLogout = async () => {
-    setIsLoading(true);
+    setIsLogoutLoading(true);
     // Display a loading toast while the request is being processed
     const loadingToastId = toast.loading("Logout...");
 
@@ -39,7 +41,7 @@ export default function Page() {
         id: loadingToastId,
       });
     } finally {
-      setIsLoading(false);
+      setIsLogoutLoading(false);
     }
   };
 
@@ -65,6 +67,29 @@ export default function Page() {
       toast.dismiss(loadingToastId);
     } catch (error: any) {
       toast.error(error?.response?.data?.error, { id: loadingToastId });
+    }
+  };
+
+  const updateProfile = async () => {
+    setIsUpdatingLoading(true);
+    // Display a loading toast while the request is being processed
+    const loadingToastId = toast.loading("Updating changes...");
+    try {
+      const response = await axiosInstance.put("/api/users/me", {
+        name: userData?.name,
+      }, {headers: {'Content-Type': 'application/json'}});
+
+      console.log(response);
+      
+
+      // update the loading toast to a success toast
+      toast.success("Updated Changes!", { id: loadingToastId });
+    } catch (error: any) {
+      console.log(error);
+      
+      toast.error(error?.response?.data?.error, { id: loadingToastId });
+    } finally {
+      setIsUpdatingLoading(false);
     }
   };
 
@@ -193,7 +218,7 @@ export default function Page() {
                 className="absolute hover:opacity-75 disabled:opacity-75 right-2.5 top-[50%]
                 bg-[#1cdf26] text-base text-white font-[500] rounded-md
                  px-4 py-2"
-                 disabled={isVerifyLoading}
+                disabled={isVerifyLoading}
                 onClick={sendVerificationEmail}
               >
                 {isVerifyLoading ? "sending mail..." : "send verification mail"}
@@ -201,8 +226,12 @@ export default function Page() {
             )}
           </div>
           {/* save changes button */}
-          <button className="text-gray-600 md:text-lg text-base w-[100%] py-3.5 px-3 transition-all rounded-xl bg-white outline-none disabled:opacity-70 focus:border-gray-500 border-2 mt-6 hover:bg-blue-500 hover:text-white">
-            Save Changes
+          <button
+            className="text-gray-600 md:text-lg text-base w-[100%] py-3.5 px-3 transition-all rounded-xl bg-white outline-none disabled:opacity-70 focus:border-gray-500 border-2 mt-6 hover:bg-blue-500 hover:text-white"
+            disabled={isUpdatingLoading}
+            onClick={updateProfile}
+          >
+            {isUpdatingLoading ? "Updating Changes..." : "Save Changes"}
           </button>
         </div>
       </div>
@@ -210,10 +239,10 @@ export default function Page() {
       {/* logout button */}
       <button
         className="fixed hover:opacity-75 disabled:opacity-75 top-6 right-5 py-3 px-8 text-base text-white font-semibold bg-red-500 rounded-md"
-        disabled={isLoading}
+        disabled={isLogoutLoading}
         onClick={onLogout}
       >
-        {isLoading ? "Logout..." : "Logout"}
+        {isLogoutLoading ? "Logout..." : "Logout"}
       </button>
     </section>
   );

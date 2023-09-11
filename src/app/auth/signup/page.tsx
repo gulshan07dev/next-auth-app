@@ -29,7 +29,7 @@ export default function SignupPage(): React.JSX.Element {
       toast.success("Signup successful!", { id: loadingToastId });
 
       // route to login
-      router.push("/login");
+      router.push("/auth/login");
     } catch (error: any) {
       // update the loading toast to an error toast
       toast.error(error?.response?.data?.error, {

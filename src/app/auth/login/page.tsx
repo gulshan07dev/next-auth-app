@@ -28,7 +28,7 @@ export default function LoginPage() {
       toast.success("Login successful!", { id: loadingToastId });
 
       // route to profile
-      router.push("/profile");
+      router.push("/user/profile");
     } catch (error: any) {
       // update the loading toast to an error toast
       toast.error(error?.response?.data?.error, {

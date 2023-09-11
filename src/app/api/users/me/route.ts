@@ -18,3 +18,30 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    const reqBody = await request.json();
+    const { name } = reqBody;
+    const userId = getDataFromToken(request);
+    console.log(userId);
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { name: name } },
+      {
+        runValidators: true,
+      }
+    );
+    console.log(user);
+
+    NextResponse.json(
+      { message: "Successful Update Profile", success: true },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.log(error);
+    
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
