@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axiosInstance from "@/helper/axiosInstance";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ export default function VerifyEmailPage({params}: any) {
   const verifyUserEmail = async () => {
     try {
       const token = decodeURIComponent(params.token);
-      await axios.post("/api/users/verifyemail", { token });
+      await axiosInstance.post("/api/users/verifyemail", { token });
       setVerified(true);
     } catch (error: any) {
       setError(true);

@@ -6,7 +6,8 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'images.pexels.com',  
             },
-        ]
+        ],
+        domains: ['res.cloudinary.com']
     }
 }
 

@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import axiosInstance from "@/helper/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { sendEmail } from "@/helper/mailer";
+import Link from "next/link";
 
-export default function Page() {
-  // Correct the function name to start with a capital letter
+export default function profilePage() {
   const router = useRouter();
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const [isVerifyLoading, setIsVerifyLoading] = useState(false);
@@ -19,24 +18,20 @@ export default function Page() {
     email: "",
     role: "",
     isVerified: "",
-    id: "",
   });
 
+  // handle logout
   const onLogout = async () => {
     setIsLogoutLoading(true);
-    // Display a loading toast while the request is being processed
     const loadingToastId = toast.loading("Logout...");
 
     try {
-      const response = await axios.get("/api/users/logout");
+      const response = await axiosInstance.get("/api/users/logout");
 
-      // update the loading toast to a success toast
       toast.success("Logout successful!", { id: loadingToastId });
 
-      // route to home page
       router.push("/");
     } catch (error: any) {
-      // update the loading toast to an error toast
       toast.error(error?.response?.data?.error, {
         id: loadingToastId,
       });
@@ -45,24 +40,17 @@ export default function Page() {
     }
   };
 
+  // get user initially
   useEffect(() => {
     getUserDetails();
   }, []);
 
   const getUserDetails = async () => {
-    // Display a loading toast while the request is being processed
     const loadingToastId = toast.loading("Fetching user...");
     try {
-      const response = await axios.get("/api/users/me");
+      const response = await axiosInstance.get("/api/users/me");
 
-      setUserData((prev) => ({
-        ...prev,
-        name: response?.data?.data?.name,
-        email: response?.data?.data?.email,
-        role: response?.data?.data?.role,
-        isVerified: response?.data?.data?.isVerified,
-        id: response?.data?.data?._id,
-      }));
+      setUserData(response?.data?.data);
 
       toast.dismiss(loadingToastId);
     } catch (error: any) {
@@ -70,36 +58,30 @@ export default function Page() {
     }
   };
 
+  // handle update profile
   const updateProfile = async () => {
     setIsUpdatingLoading(true);
-    // Display a loading toast while the request is being processed
     const loadingToastId = toast.loading("Updating changes...");
     try {
       const response = await axiosInstance.put("/api/users/me", {
         name: userData?.name,
-      }, {headers: {'Content-Type': 'application/json'}});
+      });
 
-      console.log(response);
-      
-
-      // update the loading toast to a success toast
       toast.success("Updated Changes!", { id: loadingToastId });
     } catch (error: any) {
       console.log(error);
-      
       toast.error(error?.response?.data?.error, { id: loadingToastId });
     } finally {
       setIsUpdatingLoading(false);
     }
   };
 
-  //send verification email
+  // handle send verification email
   const sendVerificationEmail = async () => {
-    // Display a loading toast while the request is being processed
     const loadingToastId = toast.loading("Sending Verification email...");
     setIsVerifyLoading(true);
     try {
-      const response = await axios.post("/api/users/mail", {
+      const response = await axiosInstance.post("/api/users/mail", {
         email: userData?.email,
         emailType: "VERIFY",
       });
@@ -115,7 +97,7 @@ export default function Page() {
   };
 
   return (
-    <section className="flex flex-col md:pt-12 pt-20 pb-16 min-h-screen w-screen gap-12  items-center">
+    <section className="flex flex-col md:pt-12 pt-10 overflow-y-scroll pb-16 h-screen w-screen gap-12  items-center overflow-x-hidden">
       {/* header */}
       <header className="relative flex flex-col gap-3 place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute z-[0] after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-3xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] ">
         <h1 className="md:text-5xl text-4xl text-orange-500 p-1 font-semibold text-center z-[2]">
@@ -233,6 +215,18 @@ export default function Page() {
           >
             {isUpdatingLoading ? "Updating Changes..." : "Save Changes"}
           </button>
+          <Link
+            className="text-red-500 text-base font-semibold p-3"
+            href="/auth/password/reset"
+          >
+            <button>Change Password</button>
+          </Link>
+          <Link
+            className="text-red-500 text-base font-semibold p-3"
+            href="/auth/password/forgot"
+          >
+            <button>Forgot Password</button>
+          </Link>
         </div>
       </div>
 

@@ -7,18 +7,22 @@ import { NextRequest, NextResponse } from "next/server";
 connect();
 
 export async function POST(request: NextRequest) {
-  try {
-    const reqBody = await request.json();
-    const { email, emailType } = reqBody;
+  try { 
+    const { email, emailType } = await request.json();
 
-    // check if user not exist
+    // check if user does'nt pass email
+    if (!email) {
+      return NextResponse.json(
+        { message: "Email is required", success: false },
+        { status: 400 }
+      );
+    }
+
+    // check if user not exist with this email
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
-        {
-          message: "Invalid details",
-          success: false,
-        },
+        { message: "User not registered with this email!", success: false },
         { status: 400 }
       );
     }
@@ -32,14 +36,12 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
-    
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to send the mail",
+        error: "Failed to send the mail",
       },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }

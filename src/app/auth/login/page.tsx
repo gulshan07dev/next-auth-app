@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import axios from 'axios';
+import axiosInstance from "@/helper/axiosInstance"; 
 import { useRouter } from "next/navigation";
 import {toast} from 'react-hot-toast'
 
@@ -22,7 +22,7 @@ export default function LoginPage() {
     const loadingToastId = toast.loading("Logging...");
 
     try {
-      const response = await axios.post("/api/users/login", user);
+      const response = await axiosInstance.post("/api/users/login", user);
 
       // update the loading toast to a success toast
       toast.success("Login successful!", { id: loadingToastId });
@@ -62,7 +62,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-1.5 w-[100%]">
           <label
             htmlFor="email"
-            className='text-2xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
+            className='text-xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
           >
             Email
           </label>
@@ -79,7 +79,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-1.5 w-[100%]">
           <label
             htmlFor="password"
-            className='text-2xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
+            className='text-xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
           >
             Password
           </label>

@@ -24,24 +24,20 @@ export async function PUT(request: NextRequest) {
     const reqBody = await request.json();
     const { name } = reqBody;
     const userId = getDataFromToken(request);
-    console.log(userId);
 
-    const user = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       userId,
       { $set: { name: name } },
       {
         runValidators: true,
       }
-    );
-    console.log(user);
+    ); 
 
-    NextResponse.json(
+    return NextResponse.json(
       { message: "Successful Update Profile", success: true },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.log(error);
-    
+  } catch (error: any) { 
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

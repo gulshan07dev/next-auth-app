@@ -3,8 +3,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import axios from "axios";
+import { toast } from "react-hot-toast"; 
+import axiosInstance from "@/helper/axiosInstance";
 
 export default function SignupPage(): React.JSX.Element {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function SignupPage(): React.JSX.Element {
     const loadingToastId = toast.loading("Signing...");
 
     try {
-      const response = await axios.post("/api/users/signup", user);
+      const response = await axiosInstance.post("/api/users/signup", user);
 
       // update the loading toast to a success toast
       toast.success("Signup successful!", { id: loadingToastId });
@@ -59,7 +59,7 @@ export default function SignupPage(): React.JSX.Element {
         <div className="flex flex-col gap-1.5 w-[100%]">
           <label
             htmlFor="fullname"
-            className='text-2xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
+            className='text-xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
           >
             Full Name
           </label>
@@ -77,7 +77,7 @@ export default function SignupPage(): React.JSX.Element {
         <div className="flex flex-col gap-1.5 w-[100%]">
           <label
             htmlFor="email"
-            className='text-2xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
+            className='text-xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
           >
             Email
           </label>
@@ -94,7 +94,7 @@ export default function SignupPage(): React.JSX.Element {
         <div className="flex flex-col gap-1.5 w-[100%]">
           <label
             htmlFor="password"
-            className='text-2xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
+            className='text-xl text-gray-900 font-medium after:content-["*"] after:text-red-400'
           >
             Password
           </label>
