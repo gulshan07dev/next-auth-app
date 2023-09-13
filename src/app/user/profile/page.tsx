@@ -8,7 +8,7 @@ import Image from "next/image";
 import { sendEmail } from "@/helper/mailer";
 import Link from "next/link";
 
-export default function profilePage() {
+export default function ProfilePage() {
   const router = useRouter();
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const [isVerifyLoading, setIsVerifyLoading] = useState(false);

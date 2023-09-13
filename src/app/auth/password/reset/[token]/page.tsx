@@ -6,7 +6,7 @@ import axiosInstance from "@/helper/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-export default function resetPasswordPage({params}: any) {
+export default function ResetPasswordPage({params}: any) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {token} = params;

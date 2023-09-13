@@ -6,7 +6,7 @@ import axiosInstance from "@/helper/axiosInstance";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-export default function changePasswordPage() {
+export default function ChangePasswordPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
