@@ -84,7 +84,7 @@ export default function LoginPage() {
             Password
           </label>
           <input
-           className="text-gray-600 md:text-lg text-base w-[100%] py-3.5 px-3 transition-all rounded-xl bg-gray-50 outline-none focus:dark:bg-white focus:border-gray-500 border-2  "
+            className="text-gray-600 md:text-lg text-base w-[100%] py-3.5 px-3 transition-all rounded-xl bg-gray-50 outline-none focus:dark:bg-white focus:border-gray-500 border-2  "
             type="password"
             id="password"
             placeholder="Enter your password..."
@@ -100,11 +100,23 @@ export default function LoginPage() {
           {isLoading ? "Logging..." : "Login"}
         </button>
 
-        <div>
-          <span className="text-gray-600 text-sm font-medium">
-            if you do not have a account?{" "}
-          </span>
-          <Link href={"/auth/signup"} className="text-blue-600 font-[500]">Signup</Link>
+        <div className="flex justify-between items-center flex-col">
+          {/* signup link */}
+          <div>
+            <span className="text-gray-600 text-sm font-medium">
+              if you do not have a account?{" "}
+            </span>
+            <Link href={"/auth/signup"} className="text-blue-600 font-[500]">
+              Signup
+            </Link>
+          </div>
+          {/* forgot password link */}
+          <Link
+            className="text-red-500 text-base font-semibold p-3"
+            href="/auth/password/forgot"
+          >
+            <button>Forgot Password</button>
+          </Link>
         </div>
       </form>
     </section>

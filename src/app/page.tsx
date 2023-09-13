@@ -59,7 +59,7 @@ export default function Home() {
           <>
             <Link
               href="/auth/login"
-              className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
+              className="group rounded-lg text-white hover:text-black border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
             >
               <h2 className={`md:text-2xl text-xl font-semibold`}>
                 Login{" "}
@@ -70,7 +70,7 @@ export default function Home() {
             </Link>
             <Link
               href="/auth/signup"
-              className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
+              className="group rounded-lg text-white hover:text-black border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
             >
               <h2 className={`md:text-2xl text-xl font-semibold`}>
                 Signup{" "}
@@ -84,7 +84,7 @@ export default function Home() {
           // profile option
           <Link
             href="/user/profile"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
+            className="group rounded-lg text-white hover:text-black border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-900 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 md:w-[300px] w-[45%] flex justify-center items-center"
           >
             <h2 className={`md:text-2xl text-xl font-semibold`}>
               Profile{" "}

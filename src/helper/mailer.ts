@@ -16,7 +16,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     } else if (emailType === "RESET") {
       await User.findByIdAndUpdate(userId, {
         forgotPasswordToken: hashedToken,
-        forgotPasswordTokenExpiry: Date.now() + 15 * 60 * 1000, // 15 min
+        forgotPasswordExpiry: Date.now() + 15 * 60 * 1000, // 15 min
       });
     }
 
@@ -38,13 +38,13 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
    html: `<p>${emailType === "VERIFY" ? "Click" : "You can reset"} <a href="${
      process.env.DOMAIN
    }/${
-     emailType === "VERIFY" ? "auth/verifyemail" : "password/reset"
+     emailType === "VERIFY" ? "auth/verifyemail" : "auth/password/reset"
    }/${encodedToken}">here</a> to ${
      emailType === "VERIFY" ? "verify your email" : "reset your password"
    }.<br /> <br /> If the link above does not work for some reason, you can copy and paste this link in a new tab: ${
      process.env.DOMAIN
    }/${
-     emailType === "VERIFY" ? "auth/verifyemail" : "password/reset"
+     emailType === "VERIFY" ? "auth/verifyemail" : "auth/password/reset"
    }/${encodedToken}.<br /> If you did not request this, please ignore this message.</p>`,
  };
 

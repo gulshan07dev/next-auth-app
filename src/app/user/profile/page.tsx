@@ -217,7 +217,7 @@ export default function profilePage() {
           </button>
           <Link
             className="text-red-500 text-base font-semibold p-3"
-            href="/auth/password/reset"
+            href="/auth/password/change"
           >
             <button>Change Password</button>
           </Link>
