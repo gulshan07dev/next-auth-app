@@ -1,28 +1,23 @@
-import multer from "multer";
+import multer from 'multer';
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "public/uploads")
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
+const storage = multer.memoryStorage(); // Store the file in memory
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimType === "/image/jpg" || file.mimType === "/image/jpeg" || file.mimType === "/image/png" || file.mimType === "/image/jpg") {
-        cb(null, true)
-    
-    } else (
-        {'error': "Unsupported file format, upload only jpeg, jpg, or png"},
-        false
-    )
-}
+    if (
+        file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/png'
+    ) {
+        cb(null, true);
+    } else {
+        cb({ error: 'Unsupported file format, upload only jpeg, jpg, or png' }, false);
+    }
+};
 
 const upload = multer({
     storage,
-    limits: { fieldSize: 1024 * 1024 },
-    fileFilter
-})
+    limits: { fileSize: 1024 * 1024 }, // 1MB file size limit
+    fileFilter,
+});
 
-export default upload
+export default upload;

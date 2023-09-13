@@ -5,6 +5,7 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const publicPaths = [
+    "/",
     "/auth/login",
     "/auth/signup",
     "/auth/password/forgot",
@@ -17,11 +18,10 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value || "";
 
   if (isPublicPath && token) {
-    // Redirect authenticated users to the home page 
-    if(path==="/") {
-      return NextResponse.redirect(new URL("/", request.url));
+    // Redirect authenticated users to the home page  
+      return NextResponse.redirect(new URL("/", request.url));  
     }
-  }
+ 
 
   if (!isPublicPath && !token) {
     // Redirect unauthenticated users to the login page

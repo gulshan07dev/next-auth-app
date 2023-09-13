@@ -21,9 +21,10 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const reqBody = await request.json();
-    const { name } = reqBody;
+    const { name } = await request.json();
     const userId = getDataFromToken(request);
+    console.log(name);
+    
 
     await User.findByIdAndUpdate(
       userId,
@@ -31,13 +32,13 @@ export async function PUT(request: NextRequest) {
       {
         runValidators: true,
       }
-    ); 
+    );
 
     return NextResponse.json(
       { message: "Successful Update Profile", success: true },
       { status: 200 }
     );
-  } catch (error: any) { 
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -39,7 +39,7 @@ export default function ChangePasswordPage() {
   return (
     <section className="flex flex-col pt-7 min-h-screen w-screen gap-10 pb-5  overflow-x-hidden  items-center">
       {/* header */}
-      <header className="relative flex flex-col gap-3 place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute  z-[0] after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-3xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ffbb] after:dark:opacity-40 before:lg:h-[360px] ">
+      <header className="relative flex flex-col gap-3 place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute  z-[0] after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-3xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ffa4] after:dark:opacity-40 before:lg:h-[360px] ">
         <h1 className="md:text-5xl text-4xl text-orange-500 p-1 font-semibold text-center z-[2]">
           change Your,
         </h1>
@@ -53,7 +53,7 @@ export default function ChangePasswordPage() {
       <form
         autoComplete="off"
         onSubmit={onChangePassword}
-        className="py-12 px-7 flex flex-col gap-6 bg-[#00000018] backdrop-blur-sm  border-purple-700 rounded-lg max-w-[500px]  w-[95%]"
+        className="py-12 px-7 flex flex-col gap-6 bg-transparent backdrop-blur-lg  border-purple-700 rounded-lg max-w-[500px]  w-[95%]"
       >
         {/* old password */}
         <div className="flex flex-col gap-1.5 w-[100%]">

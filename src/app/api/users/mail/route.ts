@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     // check if user does'nt pass email
     if (!email) {
       return NextResponse.json(
-        { message: "Email is required", success: false },
+        { error: "Email is required", success: false },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
-        { message: "User not registered with this email!", success: false },
+        { error: "User not registered with this email!", success: false },
         { status: 400 }
       );
     }
