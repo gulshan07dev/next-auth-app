@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
 
   if (isPublicPath && token) {
     // Redirect authenticated users to the home page  
-      return NextResponse.redirect(new URL("/", request.url));  
+      return NextResponse.redirect(new URL("/user/profile", request.url));  
     }
  
 
